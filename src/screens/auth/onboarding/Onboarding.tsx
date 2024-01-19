@@ -4,10 +4,12 @@ import Swiper from 'react-native-swiper';
 import { appColors } from '../../../constants/appColors';
 import { appInfos } from '../../../constants/appInfo';
 import { globalStyles } from '../../../styles/globalStyles';
+import { MyText } from '../../../components';
+import { appFonts } from '../../../constants/appFonts';
 
 const Onboarding = ({ navigation }: any) => {
-  const NextButton = <Text style={[styles.textWhite]}>Next</Text>;
-  const PrevButton = <Text style={[styles.textWhite]}>Previous</Text>;
+  const NextButton = <MyText styles={[styles.textWhite]} text="Next" />;
+  const PrevButton = <MyText styles={[styles.textWhite]} text="Previous" />;
   return (
     <View style={[globalStyles.container]}>
       <Swiper
@@ -52,7 +54,7 @@ const Onboarding = ({ navigation }: any) => {
       </Swiper>
       <View style={[styles.buttonSkipContainer]}>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <Text style={[styles.textBlack]}>Skip</Text>
+          <MyText styles={[styles.textBlack]} text="Skip" />
         </TouchableOpacity>
       </View>
     </View>
@@ -62,13 +64,13 @@ const Onboarding = ({ navigation }: any) => {
 const styles = StyleSheet.create({
   textBlack: {
     fontSize: 18,
-    fontWeight: '600',
     color: appColors.black,
+    fontFamily: appFonts.medium,
   },
   textWhite: {
     fontSize: 18,
-    fontWeight: '600',
     color: appColors.white,
+    fontFamily: appFonts.medium,
   },
   buttonSkipContainer: {
     position: 'absolute',
