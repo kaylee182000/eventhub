@@ -1,15 +1,29 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import { appColors } from '../../../constants/appColors';
 import { appInfos } from '../../../constants/appInfo';
 import { globalStyles } from '../../../styles/globalStyles';
-import { MyText } from '../../../components';
+import { CustomText } from '../../../components';
 import { appFonts } from '../../../constants/appFonts';
 
 const Onboarding = ({ navigation }: any) => {
-  const NextButton = <MyText styles={[styles.textWhite]} text="Next" />;
-  const PrevButton = <MyText styles={[styles.textWhite]} text="Previous" />;
+  const NextButton = (
+    <CustomText
+      color={appColors.white}
+      fontSize={18}
+      fontFamily={appFonts.medium}
+      text="Next"
+    />
+  );
+  const PrevButton = (
+    <CustomText
+      color={appColors.white}
+      fontSize={18}
+      fontFamily={appFonts.medium}
+      text="Previous"
+    />
+  );
   return (
     <View style={[globalStyles.container]}>
       <Swiper
@@ -54,7 +68,12 @@ const Onboarding = ({ navigation }: any) => {
       </Swiper>
       <View style={[styles.buttonSkipContainer]}>
         <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-          <MyText styles={[styles.textBlack]} text="Skip" />
+          <CustomText
+            text="Skip"
+            color={appColors.black}
+            fontSize={18}
+            fontFamily={appFonts.medium}
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -62,16 +81,6 @@ const Onboarding = ({ navigation }: any) => {
 };
 
 const styles = StyleSheet.create({
-  textBlack: {
-    fontSize: 18,
-    color: appColors.black,
-    fontFamily: appFonts.medium,
-  },
-  textWhite: {
-    fontSize: 18,
-    color: appColors.white,
-    fontFamily: appFonts.medium,
-  },
   buttonSkipContainer: {
     position: 'absolute',
     top: 50,

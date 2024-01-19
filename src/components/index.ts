@@ -1,4 +1,4 @@
-import MyText from './my_text/MyText';
+import CustomText from './custom_text/CustomText';
 import Space from './space/Space';
 
-export { Space, MyText };
+export { Space, CustomText };
