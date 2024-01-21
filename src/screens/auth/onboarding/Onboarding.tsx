@@ -11,7 +11,7 @@ const Onboarding = ({ navigation }: any) => {
   const NextButton = (
     <CustomText
       color={appColors.white}
-      fontSize={18}
+      fontSize={16}
       fontFamily={appFonts.medium}
       text="Next"
     />
@@ -19,7 +19,7 @@ const Onboarding = ({ navigation }: any) => {
   const PrevButton = (
     <CustomText
       color={appColors.white}
-      fontSize={18}
+      fontSize={16}
       fontFamily={appFonts.medium}
       text="Previous"
     />
@@ -31,8 +31,8 @@ const Onboarding = ({ navigation }: any) => {
         activeDotColor={appColors.white}
         loadMinimal={true}
         loop={false}
-        dotStyle={{ marginBottom: 24 }}
-        activeDotStyle={{ marginBottom: 24 }}
+        dotStyle={{ marginBottom: 16 }}
+        activeDotStyle={{ marginBottom: 16 }}
         showsButtons={true}
         nextButton={NextButton}
         prevButton={PrevButton}
@@ -71,7 +71,7 @@ const Onboarding = ({ navigation }: any) => {
           <CustomText
             text="Skip"
             color={appColors.black}
-            fontSize={18}
+            fontSize={16}
             fontFamily={appFonts.medium}
           />
         </TouchableOpacity>
@@ -90,12 +90,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     alignItems: 'center',
-    paddingHorizontal: 24,
+    paddingHorizontal: 16,
   },
   buttonSwipeContainer: {
     alignItems: 'flex-end',
-    paddingBottom: 44,
-    paddingHorizontal: 24,
+    paddingBottom: 36,
+    paddingHorizontal: 16,
   },
 });
 

@@ -11,18 +11,23 @@ interface CustomTextProps {
   fontFamily?: string;
   title?: boolean;
   styles?: StyleProp<TextStyle>;
+  flex?: number;
 }
 
 const CustomText = (props: CustomTextProps) => {
-  const { text, color, fontSize, fontFamily, styles, title } = props;
+  const { text, color, fontSize, fontFamily, styles, title, flex } = props;
   return (
     <Text
       style={[
         globalStyles.primaryText,
         {
           color: color ?? appColors.text,
-          fontSize: fontSize ?? title ? 24 : 14,
-          fontFamily: fontFamily ?? title ? appFonts.bold : appFonts.regular,
+          fontSize: title ? 24 : fontSize ? fontSize : 14,
+          fontFamily: title
+            ? appFonts.bold
+            : fontFamily
+            ? fontFamily
+            : appFonts.regular,
         },
         styles,
       ]}

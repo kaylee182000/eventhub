@@ -12,4 +12,14 @@ export const globalStyles = StyleSheet.create({
     fontSize: 14,
     fontFamily: appFonts.regular,
   },
+  btnContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
+    backgroundColor: appColors.white,
+    paddingHorizontal: 16,
+    paddingVertical: 16,
+    height: 56,
+    flexDirection: 'row',
+  },
 });
