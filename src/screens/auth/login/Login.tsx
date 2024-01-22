@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React, { useState } from 'react';
 import { globalStyles } from '../../../styles/globalStyles';
-import { CustomInput, Space } from '../../../components';
+import { CustomContainer, CustomInput, Space } from '../../../components';
 import { Lock, Sms } from 'iconsax-react-native';
 import { appColors } from '../../../constants/appColors';
 
@@ -9,16 +9,7 @@ const Login = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   return (
-    <View
-      style={[
-        globalStyles.container,
-        {
-          justifyContent: 'center',
-          alignItems: 'center',
-          paddingHorizontal: 16,
-        },
-      ]}
-    >
+    <CustomContainer isImageBackground>
       <CustomInput
         placeholder="Email"
         value={email}
@@ -33,7 +24,7 @@ const Login = () => {
         prefix={<Lock size={22} color={appColors.gray} />}
         isPassword
       />
-    </View>
+    </CustomContainer>
   );
 };
 
