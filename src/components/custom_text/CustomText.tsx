@@ -21,6 +21,7 @@ const CustomText = (props: CustomTextProps) => {
       style={[
         globalStyles.primaryText,
         {
+          flex: flex ? 1 : 0,
           color: color ?? appColors.text,
           fontSize: title ? 24 : fontSize ? fontSize : 14,
           fontFamily: title

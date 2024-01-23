@@ -14,7 +14,7 @@ import { appColors } from '../../constants/appColors';
 enum CustomButtonTypes {}
 
 interface CustomButtonProps {
-  icon?: string;
+  icon?: React.ReactNode;
   text: string;
   type?: 'primary' | 'text' | 'link';
   color?: string;
@@ -37,7 +37,7 @@ const CustomButton = (props: CustomButtonProps) => {
     type,
     iconFlex,
   } = props;
-  return type ? (
+  return type === 'primary' ? (
     <TouchableOpacity
       onPress={onPress}
       style={[
@@ -46,7 +46,7 @@ const CustomButton = (props: CustomButtonProps) => {
         styles,
       ]}
     >
-      {icon && icon}
+      {icon && iconFlex === 'left' && icon}
       <CustomText
         text={text}
         color={textColor ?? appColors.white}
@@ -60,6 +60,7 @@ const CustomButton = (props: CustomButtonProps) => {
       <CustomText
         text={text}
         color={type === 'link' ? appColors.link : appColors.text}
+        styles={textStyles}
       />
     </TouchableOpacity>
   );
