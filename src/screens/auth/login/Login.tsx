@@ -12,8 +12,13 @@ import {
 import { ArrowRight, Lock, Sms } from 'iconsax-react-native';
 import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
+import { NavigationProp } from '@react-navigation/native';
 
-const Login = () => {
+interface LoginProps {
+  navigation: NavigationProp<any, any>;
+}
+
+const Login = ({ navigation }: LoginProps) => {
   const [email, setEmail] = useState<string>('');
 
   const [password, setPassword] = useState<string>('');
@@ -176,7 +181,7 @@ const Login = () => {
           <CustomButton
             type="link"
             text="Sign up"
-            onPress={() => {}}
+            onPress={() => navigation.navigate('SignUp')}
             textStyles={{ fontFamily: appFonts.medium, fontSize: 15 }}
           />
         </View>
