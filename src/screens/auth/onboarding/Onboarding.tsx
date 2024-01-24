@@ -6,8 +6,13 @@ import { appInfos } from '../../../constants/appInfo';
 import { globalStyles } from '../../../styles/globalStyles';
 import { CustomText } from '../../../components';
 import { appFonts } from '../../../constants/appFonts';
+import { NavigationProp } from '@react-navigation/native';
 
-const Onboarding = ({ navigation }: any) => {
+interface OnBoardingProps {
+  navigation: NavigationProp<any, any>;
+}
+
+const Onboarding = ({ navigation }: OnBoardingProps) => {
   const NextButton = (
     <CustomText
       color={appColors.white}

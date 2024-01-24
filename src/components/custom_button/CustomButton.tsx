@@ -1,15 +1,13 @@
+import React from 'react';
 import {
-  View,
-  Text,
   StyleProp,
-  ViewStyle,
   TextStyle,
   TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
-import React from 'react';
 import { CustomText } from '..';
-import { globalStyles } from '../../styles/globalStyles';
 import { appColors } from '../../constants/appColors';
+import { globalStyles } from '../../styles/globalStyles';
 
 enum CustomButtonTypes {}
 
@@ -56,7 +54,7 @@ const CustomButton = (props: CustomButtonProps) => {
       {icon && iconFlex === 'right' && icon}
     </TouchableOpacity>
   ) : (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <CustomText
         text={text}
         color={type === 'link' ? appColors.link : appColors.text}

@@ -39,4 +39,11 @@ export const globalStyles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 6,
   },
+  header: {
+    height: 75,
+    backgroundColor: 'transparent',
+    paddingHorizontal: 16,
+    justifyContent: 'flex-end',
+    marginBottom: 20,
+  },
 });
