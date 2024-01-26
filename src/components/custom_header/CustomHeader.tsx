@@ -12,7 +12,14 @@ const CustomHeader = (props: CustomHeaderProps) => {
   const { onPress } = props;
   return (
     <View style={[globalStyles.header]}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity
+        style={{
+          height: 48,
+          justifyContent: 'flex-end',
+          width: 48,
+        }}
+        onPress={onPress}
+      >
         <FontAwesome6 name="arrow-left" color={appColors.black} size={22} />
       </TouchableOpacity>
     </View>

@@ -8,6 +8,7 @@ import {
   CustomInput,
   CustomSection,
   CustomText,
+  MyArrowIcon,
 } from '../../../components';
 import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
@@ -25,16 +26,6 @@ const SignUp = ({ navigation }: SignUpProps) => {
   const [username, setUsername] = useState<string>('');
 
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-
-  const SuffixIcon = () => {
-    return (
-      <View
-        style={{ padding: 6, backgroundColor: '#3D56F0', borderRadius: 50 }}
-      >
-        <ArrowRight size={18} color={appColors.white} />
-      </View>
-    );
-  };
 
   const PrefixSvgIcon = (icon: string) => {
     if (icon === 'Facebook') {
@@ -100,7 +91,7 @@ const SignUp = ({ navigation }: SignUpProps) => {
         <CustomButton
           onPress={() => {}}
           text="SIGN UP"
-          icon={SuffixIcon()}
+          icon={<MyArrowIcon />}
           iconFlex="right"
           type="primary"
           textStyles={{

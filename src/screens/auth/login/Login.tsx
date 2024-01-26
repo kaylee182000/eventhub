@@ -7,6 +7,7 @@ import {
   CustomInput,
   CustomSection,
   CustomText,
+  MyArrowIcon,
   Space,
 } from '../../../components';
 import { ArrowRight, Lock, Sms } from 'iconsax-react-native';
@@ -24,16 +25,6 @@ const Login = ({ navigation }: LoginProps) => {
   const [password, setPassword] = useState<string>('');
 
   const [isRemember, setIsRemeber] = useState<boolean>(true);
-
-  const SuffixIcon = () => {
-    return (
-      <View
-        style={{ padding: 6, backgroundColor: '#3D56F0', borderRadius: 50 }}
-      >
-        <ArrowRight size={18} color={appColors.white} />
-      </View>
-    );
-  };
 
   const PrefixSvgIcon = (icon: string) => {
     if (icon === 'Facebook') {
@@ -99,7 +90,7 @@ const Login = ({ navigation }: LoginProps) => {
             <CustomText text="Remember me" />
           </View>
           <CustomButton
-            onPress={() => {}}
+            onPress={() => navigation.navigate('EnterNumber')}
             text="Forgot Password?"
             type="text"
           />
@@ -108,7 +99,7 @@ const Login = ({ navigation }: LoginProps) => {
         <CustomButton
           onPress={() => {}}
           text="SIGN IN"
-          icon={SuffixIcon()}
+          icon={<MyArrowIcon />}
           iconFlex="right"
           type="primary"
           textStyles={{
