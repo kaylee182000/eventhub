@@ -51,6 +51,7 @@ const CustomInput = (props: CustomInputProps) => {
         secureTextEntry={isShowPwd}
         placeholderTextColor={appColors.gray}
         keyboardType={keyboardType ?? 'default'}
+        cursorColor={appColors.primary}
       />
       {suffix ?? suffix}
       <TouchableOpacity

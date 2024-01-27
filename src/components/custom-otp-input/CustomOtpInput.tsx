@@ -56,6 +56,8 @@ const CustomOtpInput = (props: CustomOtpInputProps) => {
         maxLength={1}
         onSubmitEditing={() => onComplete(pin.join(''))}
         ref={mapRef[i]}
+        cursorColor={appColors.primary}
+        secureTextEntry
         // autoFocus={i === 0}
       />,
     );

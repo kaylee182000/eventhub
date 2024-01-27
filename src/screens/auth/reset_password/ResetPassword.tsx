@@ -34,7 +34,7 @@ const ResetPassword = ({ navigation }: ResetPasswordProps) => {
           {
             justifyContent: 'center',
             alignItems: 'center',
-            marginVertical: 30,
+            marginTop: 16,
           },
         ]}
       >
@@ -65,7 +65,7 @@ const ResetPassword = ({ navigation }: ResetPasswordProps) => {
       </CustomSection>
       <CustomSection
         styles={[
-          { justifyContent: 'center', alignItems: 'center', marginTop: 40 },
+          { justifyContent: 'center', alignItems: 'center', marginTop: 24 },
         ]}
       >
         <CustomText
@@ -98,7 +98,7 @@ const ResetPassword = ({ navigation }: ResetPasswordProps) => {
         }}
         styles={[
           globalStyles.shadow,
-          { width: 271, alignSelf: 'center', marginVertical: 30 },
+          { width: 271, alignSelf: 'center', marginVertical: 24 },
         ]}
       />
     </CustomContainer>

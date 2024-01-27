@@ -64,7 +64,7 @@ const EnterOtp = ({ navigation }: EnterOtpProps) => {
           {
             justifyContent: 'center',
             alignItems: 'center',
-            marginVertical: 30,
+            marginTop: 16,
           },
         ]}
       >
