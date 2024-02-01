@@ -15,13 +15,28 @@ import { appColors } from '../../../constants/appColors';
 import { Sms } from 'iconsax-react-native';
 import { appFonts } from '../../../constants/appFonts';
 import { globalStyles } from '../../../styles/globalStyles';
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 
 interface ResetPasswordProps {
   navigation: NavigationProp<any, any>;
 }
 
 const ResetPassword = ({ navigation }: ResetPasswordProps) => {
-  const [email, setEmail] = useState<string>('');
+  const { ...methods } = useForm<{ email: string }>({ mode: 'onChange' });
+
+  const onSubmit: SubmitHandler<{ email: string }> = (data) => {
+    navigation.navigate('Login');
+  };
+
+  const onError: SubmitErrorHandler<{ email: string }> = (errors, e) => {
+    return console.log({ errors });
+  };
+
   return (
     <CustomContainer
       isImageBackground
@@ -74,7 +89,24 @@ const ResetPassword = ({ navigation }: ResetPasswordProps) => {
           fontSize={15}
         />
         <Space height={20} />
-        <CustomInput
+        <FormProvider {...methods}>
+          <CustomInput
+            name="email"
+            placeholder="Email"
+            prefix={<Sms size={22} color={appColors.gray} />}
+            allowClear
+            customStyles={{ width: '74%' }}
+            onResetField={methods.resetField}
+            rules={{
+              required: 'Email is required!',
+              pattern: {
+                value: /\b[\w\\.+-]+@[\w\\.-]+\.\w{2,4}\b/,
+                message: 'Must be formatted: john.doe@email.com',
+              },
+            }}
+          />
+        </FormProvider>
+        {/* <CustomInput
           placeholder="Email"
           value={email}
           onChange={(val) => setEmail(val)}
@@ -82,10 +114,10 @@ const ResetPassword = ({ navigation }: ResetPasswordProps) => {
           allowClear
           keyboardType="email-address"
           customStyles={{ width: '65%' }}
-        />
+        /> */}
       </CustomSection>
       <CustomButton
-        onPress={() => navigation.navigate('Login')}
+        onPress={methods.handleSubmit(onSubmit, onError)}
         icon={<MyArrowIcon />}
         iconFlex="right"
         text="Send"
