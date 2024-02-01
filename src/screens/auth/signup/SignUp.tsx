@@ -1,7 +1,14 @@
 import { NavigationProp } from '@react-navigation/native';
-import { ArrowRight, Lock, Sms, User } from 'iconsax-react-native';
+import { Lock, Sms, User } from 'iconsax-react-native';
 import React, { useState } from 'react';
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
 import { Image, View } from 'react-native';
+import { authApi } from '../../../apis/auth.api';
 import {
   CustomButton,
   CustomContainer,
@@ -14,52 +21,41 @@ import {
 import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
 import { globalStyles } from '../../../styles/globalStyles';
-import { authApi } from '../../../apis/auth.api';
 
 interface SignUpProps {
   navigation: NavigationProp<any, any>;
 }
 
-interface InitialValue {
+interface FormValue {
   username: string;
   email: string;
   password: string;
   confirmPassword: string;
 }
 
-const initialValue: InitialValue = {
-  username: '',
-  email: '',
-  password: '',
-  confirmPassword: '',
-};
-
 const SignUp = ({ navigation }: SignUpProps) => {
-  const [values, setValues] = useState<InitialValue>(initialValue);
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleChangeInput = (
-    value: string,
-    type: 'username' | 'email' | 'password' | 'confirmPassword',
-  ) => {
-    const data = { ...values };
+  const { ...methods } = useForm<FormValue>({ mode: 'onChange' });
 
-    data[type] = value;
+  const password = methods.watch('password', '');
 
-    setValues(data);
-  };
-
-  const handleRegister = async () => {
+  const onSubmit: SubmitHandler<FormValue> = async (data) => {
     setIsLoading(true);
     try {
-      const { email, password, username } = values;
+      const { email, password, username } = data;
       const res = await authApi.Register({
         email: email,
         password: password,
         username: username,
       });
       if (res.data) {
+        methods.reset({
+          username: '',
+          password: '',
+          email: '',
+          confirmPassword: '',
+        });
         setIsLoading(false);
       }
     } catch (error) {
@@ -67,6 +63,12 @@ const SignUp = ({ navigation }: SignUpProps) => {
       setIsLoading(false);
     }
   };
+
+  const onError: SubmitErrorHandler<FormValue> = (errors, e) => {
+    return console.log({ errors });
+  };
+
+  const handleRegister = async () => {};
 
   const PrefixSvgIcon = (icon: string) => {
     if (icon === 'Facebook') {
@@ -101,37 +103,62 @@ const SignUp = ({ navigation }: SignUpProps) => {
         </CustomSection>
 
         <CustomSection>
-          <CustomInput
-            placeholder="Username"
-            value={values.username}
-            onChange={(val) => handleChangeInput(val, 'username')}
-            prefix={<User size={22} color={appColors.gray} />}
-            allowClear
-          />
-          <CustomInput
-            placeholder="Email"
-            value={values.email}
-            onChange={(val) => handleChangeInput(val, 'email')}
-            prefix={<Sms size={22} color={appColors.gray} />}
-            allowClear
-          />
-          <CustomInput
-            placeholder="Password"
-            value={values.password}
-            onChange={(val) => handleChangeInput(val, 'password')}
-            prefix={<Lock size={22} color={appColors.gray} />}
-            isPassword
-          />
-          <CustomInput
-            placeholder="Password"
-            value={values.confirmPassword}
-            onChange={(val) => handleChangeInput(val, 'confirmPassword')}
-            prefix={<Lock size={22} color={appColors.gray} />}
-            isPassword
-          />
+          <FormProvider {...methods}>
+            <CustomInput
+              name="username"
+              placeholder="Username"
+              prefix={<User size={22} color={appColors.gray} />}
+              allowClear
+              onResetField={methods.resetField}
+              rules={{ required: 'Username is required!' }}
+            />
+            <CustomInput
+              name="email"
+              placeholder="Email"
+              prefix={<Sms size={22} color={appColors.gray} />}
+              allowClear
+              onResetField={methods.resetField}
+              rules={{
+                required: 'Email is required!',
+                pattern: {
+                  value: /\b[\w\\.+-]+@[\w\\.-]+\.\w{2,4}\b/,
+                  message: 'Must be formatted: john.doe@email.com',
+                },
+              }}
+            />
+            <CustomInput
+              name="password"
+              placeholder="Password"
+              prefix={<Lock size={22} color={appColors.gray} />}
+              isPassword
+              rules={{
+                required: 'Password is required!',
+                minLength: {
+                  value: 6,
+                  message: 'Password must be at least 6 characters',
+                },
+                maxLength: {
+                  value: 12,
+                  message: 'Password can only have a maximum of 12 characters',
+                },
+              }}
+            />
+            <CustomInput
+              name="confirmPassword"
+              placeholder="Password"
+              prefix={<Lock size={22} color={appColors.gray} />}
+              isPassword
+              rules={{
+                required: 'Confirm password is required!',
+                validate: (value) => {
+                  return value === password || 'The passwords do not match';
+                },
+              }}
+            />
+          </FormProvider>
 
           <CustomButton
-            onPress={handleRegister}
+            onPress={methods.handleSubmit(onSubmit, onError)}
             text="SIGN UP"
             icon={<MyArrowIcon />}
             iconFlex="right"
@@ -144,7 +171,7 @@ const SignUp = ({ navigation }: SignUpProps) => {
             }}
             styles={[
               globalStyles.shadow,
-              { width: 271, alignSelf: 'center', marginVertical: 40 },
+              { width: 271, alignSelf: 'center', marginVertical: 36 },
             ]}
           />
 
