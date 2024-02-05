@@ -5,6 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'react-native';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 import MainNavigator from './src/navigators/MainNavigator';
+import store, { persistor } from './src/store';
+import { Provider } from 'react-redux';
+import { ModalLoading } from './src/components';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const App = () => {
   const [isShowSplash, setIsShowSplash] = useState<boolean>(true);
@@ -33,18 +37,22 @@ const App = () => {
 
   return (
     <>
-      <StatusBar
-        barStyle={'dark-content'}
-        backgroundColor={'transparent'}
-        translucent
-      />
-      {isShowSplash ? (
-        <Splash />
-      ) : (
-        <NavigationContainer>
-          {isAuthorized ? <MainNavigator /> : <AuthNavigator />}
-        </NavigationContainer>
-      )}
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <StatusBar
+            barStyle={'dark-content'}
+            backgroundColor={'transparent'}
+            translucent
+          />
+          {isShowSplash ? (
+            <Splash />
+          ) : (
+            <NavigationContainer>
+              {isAuthorized ? <MainNavigator /> : <AuthNavigator />}
+            </NavigationContainer>
+          )}
+        </PersistGate>
+      </Provider>
     </>
   );
 };
