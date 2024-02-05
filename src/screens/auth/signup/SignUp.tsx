@@ -21,6 +21,7 @@ import {
 import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
 import { globalStyles } from '../../../styles/globalStyles';
+import { showToast } from '../../../utils';
 
 interface SignUpProps {
   navigation: NavigationProp<any, any>;
@@ -49,6 +50,8 @@ const SignUp = ({ navigation }: SignUpProps) => {
         password: password,
         username: username,
       });
+      console.log(res.data);
+
       if (res.data) {
         methods.reset({
           username: '',
@@ -57,10 +60,12 @@ const SignUp = ({ navigation }: SignUpProps) => {
           confirmPassword: '',
         });
         setIsLoading(false);
+        showToast("You're all signed up", 'success');
       }
     } catch (error) {
       console.error(error);
       setIsLoading(false);
+      showToast('Try again later', 'error');
     }
   };
 

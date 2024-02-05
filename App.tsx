@@ -9,6 +9,7 @@ import store, { persistor } from './src/store';
 import { Provider } from 'react-redux';
 import { ModalLoading } from './src/components';
 import { PersistGate } from 'redux-persist/integration/react';
+import Toast from 'react-native-toast-message';
 
 const App = () => {
   const [isShowSplash, setIsShowSplash] = useState<boolean>(true);
@@ -51,6 +52,7 @@ const App = () => {
               {isAuthorized ? <MainNavigator /> : <AuthNavigator />}
             </NavigationContainer>
           )}
+          <Toast />
         </PersistGate>
       </Provider>
     </>
