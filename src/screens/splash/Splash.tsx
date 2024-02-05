@@ -1,14 +1,8 @@
-import {
-  View,
-  Text,
-  ImageBackground,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
 import React from 'react';
-import { appInfos } from '../../constants/appInfo';
+import { ActivityIndicator, Image, ImageBackground } from 'react-native';
 import { Space } from '../../components';
 import { appColors } from '../../constants/appColors';
+import { appInfos } from '../../constants/appInfo';
 
 const Splash = () => {
   return (

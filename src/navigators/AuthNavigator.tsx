@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
   EnterNumber,
   EnterOtp,
@@ -8,11 +9,15 @@ import {
   ResetPassword,
   SignUp,
 } from '../screens';
+import { rootState } from '../store';
 
 const AuthNavigator = () => {
+  const main = useSelector((state: rootState) => state.main);
+
   const Stack = createNativeStackNavigator();
   return (
     <Stack.Navigator
+      initialRouteName={main.alreadyOnboard ? 'Login' : 'Onboarding'}
       screenOptions={{
         headerShown: false,
       }}

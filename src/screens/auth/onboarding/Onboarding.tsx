@@ -1,18 +1,25 @@
+import { NavigationProp } from '@react-navigation/native';
 import React from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import { appColors } from '../../../constants/appColors';
-import { appInfos } from '../../../constants/appInfo';
-import { globalStyles } from '../../../styles/globalStyles';
+import { useDispatch } from 'react-redux';
 import { CustomText } from '../../../components';
+import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
-import { NavigationProp } from '@react-navigation/native';
+import { appInfos } from '../../../constants/appInfo';
+import { setAlreadyOnboard } from '../../../store/main/mainReducer';
+import { globalStyles } from '../../../styles/globalStyles';
 
 interface OnBoardingProps {
   navigation: NavigationProp<any, any>;
 }
 
 const Onboarding = ({ navigation }: OnBoardingProps) => {
+  const dispatch = useDispatch();
+  const onPressSkip = () => {
+    dispatch(setAlreadyOnboard({ val: true }));
+    navigation.navigate('Login');
+  };
   const NextButton = (
     <CustomText
       color={appColors.white}
@@ -72,7 +79,7 @@ const Onboarding = ({ navigation }: OnBoardingProps) => {
         />
       </Swiper>
       <View style={[styles.buttonSkipContainer]}>
-        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <TouchableOpacity onPress={onPressSkip}>
           <CustomText
             text="Skip"
             color={appColors.black}
