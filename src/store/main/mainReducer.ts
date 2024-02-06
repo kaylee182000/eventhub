@@ -10,12 +10,8 @@ const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
-    setAlreadyOnboard(
-      state: MainState,
-      action: PayloadAction<{ val: boolean }>,
-    ) {
-      const { val } = action.payload;
-      state.alreadyOnboard = val ? true : false;
+    setAlreadyOnboard(state: MainState, action: PayloadAction<boolean>) {
+      state.alreadyOnboard = action.payload;
     },
   },
 });

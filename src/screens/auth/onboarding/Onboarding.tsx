@@ -17,7 +17,7 @@ interface OnBoardingProps {
 const Onboarding = ({ navigation }: OnBoardingProps) => {
   const dispatch = useDispatch();
   const onPressSkip = () => {
-    dispatch(setAlreadyOnboard({ val: true }));
+    dispatch(setAlreadyOnboard(true));
     navigation.navigate('Login');
   };
   const NextButton = (
