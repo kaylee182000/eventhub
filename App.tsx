@@ -1,41 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import AuthNavigator from './src/navigators/AuthNavigator';
-import { Splash } from './src/screens';
 import { NavigationContainer } from '@react-navigation/native';
+import React from 'react';
 import { StatusBar } from 'react-native';
-import { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import MainNavigator from './src/navigators/MainNavigator';
-import store, { persistor } from './src/store';
-import { Provider } from 'react-redux';
-import { ModalLoading } from './src/components';
-import { PersistGate } from 'redux-persist/integration/react';
 import Toast from 'react-native-toast-message';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import AppNavigator from './src/navigators/AppNavigator';
+import store, { persistor } from './src/store';
 
 const App = () => {
-  const [isShowSplash, setIsShowSplash] = useState<boolean>(true);
-
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false);
-
-  const { setItem, getItem } = useAsyncStorage('accessToken');
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsShowSplash(false);
-    }, 1500);
-
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {
-    checkIsAuthorized();
-  }, []);
-
-  const checkIsAuthorized = async () => {
-    const token = await getItem();
-
-    token && setIsAuthorized(true);
-  };
-
   return (
     <>
       <Provider store={store}>
@@ -45,13 +17,9 @@ const App = () => {
             backgroundColor={'transparent'}
             translucent
           />
-          {isShowSplash ? (
-            <Splash />
-          ) : (
-            <NavigationContainer>
-              {isAuthorized ? <MainNavigator /> : <AuthNavigator />}
-            </NavigationContainer>
-          )}
+          <NavigationContainer>
+            <AppNavigator />
+          </NavigationContainer>
           <Toast />
         </PersistGate>
       </Provider>
