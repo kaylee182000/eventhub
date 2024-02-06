@@ -22,6 +22,8 @@ import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
 import { globalStyles } from '../../../styles/globalStyles';
 import { showToast } from '../../../utils';
+import { useDispatch } from 'react-redux';
+import { setIsAuthorized } from '../../../store/auth/authReducer';
 
 interface SignUpProps {
   navigation: NavigationProp<any, any>;
@@ -35,6 +37,8 @@ interface FormValue {
 }
 
 const SignUp = ({ navigation }: SignUpProps) => {
+  const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { ...methods } = useForm<FormValue>({ mode: 'onChange' });
@@ -50,7 +54,6 @@ const SignUp = ({ navigation }: SignUpProps) => {
         password: password,
         username: username,
       });
-      console.log(res.data);
 
       if (res.data) {
         methods.reset({
@@ -60,7 +63,9 @@ const SignUp = ({ navigation }: SignUpProps) => {
           confirmPassword: '',
         });
         setIsLoading(false);
+        dispatch(setIsAuthorized(true));
         showToast("You're all signed up", 'success');
+        navigation.navigate('Tab');
       }
     } catch (error) {
       console.error(error);
@@ -72,8 +77,6 @@ const SignUp = ({ navigation }: SignUpProps) => {
   const onError: SubmitErrorHandler<FormValue> = (errors, e) => {
     return console.log({ errors });
   };
-
-  const handleRegister = async () => {};
 
   const PrefixSvgIcon = (icon: string) => {
     if (icon === 'Facebook') {
