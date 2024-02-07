@@ -46,32 +46,33 @@ const SignUp = ({ navigation }: SignUpProps) => {
   const password = methods.watch('password', '');
 
   const onSubmit: SubmitHandler<FormValue> = async (data) => {
-    setIsLoading(true);
-    try {
-      const { email, password, username } = data;
-      const res = await authApi.Register({
-        email: email,
-        password: password,
-        username: username,
-      });
+    navigation.navigate('EnterOtp', {
+      ...data,
+    });
+    // setIsLoading(true);
+    // try {
+    //   const { email, password, username } = data;
+    //   const res = await authApi.Register({
+    //     email: email,
+    //     password: password,
+    //     username: username,
+    //   });
 
-      if (res.data) {
-        methods.reset({
-          username: '',
-          password: '',
-          email: '',
-          confirmPassword: '',
-        });
-        setIsLoading(false);
-        dispatch(setIsAuthorized(true));
-        showToast("You're all signed up", 'success');
-        navigation.navigate('Tab');
-      }
-    } catch (error) {
-      console.error(error);
-      setIsLoading(false);
-      showToast('Try again later', 'error');
-    }
+    //   if (res.data) {
+    //     methods.reset({
+    //       username: '',
+    //       password: '',
+    //       email: '',
+    //       confirmPassword: '',
+    //     });
+    //     setIsLoading(false);
+
+    //   }
+    // } catch (error) {
+    //   console.error(error);
+    //   setIsLoading(false);
+    //   showToast('Try again later', 'error');
+    // }
   };
 
   const onError: SubmitErrorHandler<FormValue> = (errors, e) => {

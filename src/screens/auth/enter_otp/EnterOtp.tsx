@@ -1,4 +1,4 @@
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
 import {
@@ -15,9 +15,10 @@ import { globalStyles } from '../../../styles/globalStyles';
 
 interface EnterOtpProps {
   navigation: NavigationProp<any, any>;
+  route: RouteProp<any>;
 }
 
-const EnterOtp = ({ navigation }: EnterOtpProps) => {
+const EnterOtp = ({ navigation, route }: EnterOtpProps) => {
   const [time, setTime] = useState<number>(60);
 
   const [displayText, setDisplayText] = useState<string>('');
@@ -97,7 +98,7 @@ const EnterOtp = ({ navigation }: EnterOtpProps) => {
             ]}
           />
           <CustomText
-            text={'090973535'}
+            text={route.params?.email}
             styles={[
               {
                 lineHeight: 20,

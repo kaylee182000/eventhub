@@ -176,7 +176,7 @@ const Login = ({ navigation }: LoginProps) => {
               <CustomText text="Remember me" />
             </View>
             <CustomButton
-              onPress={() => navigation.navigate('EnterNumber')}
+              onPress={() => navigation.navigate('ResetPassword')}
               text="Forgot Password?"
               type="text"
             />
