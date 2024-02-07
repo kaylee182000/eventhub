@@ -1,5 +1,5 @@
 import { View, Text, Image, Switch } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { globalStyles } from '../../../styles/globalStyles';
 import {
   CustomButton,
@@ -23,8 +23,12 @@ import {
 } from 'react-hook-form';
 import { showToast } from '../../../utils';
 import { authApi } from '../../../apis/auth.api';
-import { setIsAuthorized } from '../../../store/auth/authReducer';
-import { useDispatch } from 'react-redux';
+import {
+  setIsAuthorized,
+  setStoredEmail,
+} from '../../../store/auth/authReducer';
+import { useDispatch, useSelector } from 'react-redux';
+import { rootState } from '../../../store';
 
 interface LoginProps {
   navigation: NavigationProp<any, any>;
@@ -37,11 +41,20 @@ interface FormValue {
 
 const Login = ({ navigation }: LoginProps) => {
   const dispatch = useDispatch();
+
+  const auth = useSelector((state: rootState) => state.auth);
+
   const [isRemember, setIsRemeber] = useState<boolean>(true);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { ...methods } = useForm<FormValue>({ mode: 'onChange' });
+
+  useEffect(() => {
+    if (auth.storedEmail) {
+      methods.setValue('email', auth.storedEmail);
+    }
+  }, [auth.storedEmail]);
 
   const onSubmit: SubmitHandler<FormValue> = async (data) => {
     setIsLoading(true);
@@ -58,8 +71,12 @@ const Login = ({ navigation }: LoginProps) => {
         });
         setIsLoading(false);
         dispatch(setIsAuthorized(true));
+        if (isRemember) {
+          dispatch(setStoredEmail(email));
+        } else {
+          dispatch(setStoredEmail(''));
+        }
         showToast('Login successful!', 'success');
-        navigation.navigate('Tab');
       }
     } catch (error) {
       console.error(error);

@@ -4,6 +4,7 @@ import { PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: AuthState = {
   isAuthorized: false,
+  storedEmail: '',
 };
 
 const authSLice = createSlice({
@@ -13,9 +14,12 @@ const authSLice = createSlice({
     setIsAuthorized: (state: AuthState, action: PayloadAction<boolean>) => {
       state.isAuthorized = action.payload;
     },
+    setStoredEmail: (state: AuthState, action: PayloadAction<string>) => {
+      state.storedEmail = action.payload;
+    },
   },
 });
 
 export const authReducer = authSLice.reducer;
 
-export const { setIsAuthorized } = authSLice.actions;
+export const { setIsAuthorized, setStoredEmail } = authSLice.actions;
