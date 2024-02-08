@@ -22,8 +22,6 @@ import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
 import { globalStyles } from '../../../styles/globalStyles';
 import { showToast } from '../../../utils';
-import { useDispatch } from 'react-redux';
-import { setIsAuthorized } from '../../../store/auth/authReducer';
 
 interface SignUpProps {
   navigation: NavigationProp<any, any>;
@@ -37,8 +35,6 @@ interface FormValue {
 }
 
 const SignUp = ({ navigation }: SignUpProps) => {
-  const dispatch = useDispatch();
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { ...methods } = useForm<FormValue>({ mode: 'onChange' });
@@ -46,33 +42,31 @@ const SignUp = ({ navigation }: SignUpProps) => {
   const password = methods.watch('password', '');
 
   const onSubmit: SubmitHandler<FormValue> = async (data) => {
-    navigation.navigate('EnterOtp', {
-      ...data,
-    });
-    // setIsLoading(true);
-    // try {
-    //   const { email, password, username } = data;
-    //   const res = await authApi.Register({
-    //     email: email,
-    //     password: password,
-    //     username: username,
-    //   });
+    setIsLoading(true);
+    try {
+      const { email } = data;
+      const res = await authApi.SendVerificationCode({
+        email: email,
+      });
 
-    //   if (res.data) {
-    //     methods.reset({
-    //       username: '',
-    //       password: '',
-    //       email: '',
-    //       confirmPassword: '',
-    //     });
-    //     setIsLoading(false);
-
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    //   setIsLoading(false);
-    //   showToast('Try again later', 'error');
-    // }
+      if (res.data) {
+        methods.reset({
+          username: '',
+          password: '',
+          email: '',
+          confirmPassword: '',
+        });
+        navigation.navigate('EnterOtp', {
+          code: res.data.code,
+          ...data,
+        });
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+      showToast('Try again later', 'error');
+    }
   };
 
   const onError: SubmitErrorHandler<FormValue> = (errors, e) => {

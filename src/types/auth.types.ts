@@ -8,3 +8,7 @@ export interface LoginBodyResquest {
   email: string;
   password: string;
 }
+
+export interface SendVerificationBodyResquest {
+  email: string;
+}

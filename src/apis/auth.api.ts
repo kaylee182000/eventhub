@@ -1,4 +1,8 @@
-import { LoginBodyResquest, RegisterBodyResquest } from '../types/auth.types';
+import {
+  LoginBodyResquest,
+  RegisterBodyResquest,
+  SendVerificationBodyResquest,
+} from '../types/auth.types';
 import axiosClient from './axiosClient';
 
 export const authApi = {
@@ -7,5 +11,8 @@ export const authApi = {
   },
   Login(body: LoginBodyResquest) {
     return axiosClient.post('/auth/login', body);
+  },
+  SendVerificationCode(body: SendVerificationBodyResquest) {
+    return axiosClient.post('/auth/verification', body);
   },
 };
