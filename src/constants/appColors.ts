@@ -8,5 +8,7 @@ export const appColors = {
   gray3: '#E4DFDF',
   black: '#000',
   blackOpacity: '#00000010',
+  blackHighOpacity: '#00000090',
   link: '#5669FF',
+  errorColor: '#c0392b',
 };

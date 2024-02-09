@@ -1,17 +1,23 @@
-import { Image } from 'react-native';
+import { NavigationProp } from '@react-navigation/native';
 import React, { useState } from 'react';
+import {
+  FormProvider,
+  SubmitErrorHandler,
+  SubmitHandler,
+  useForm,
+} from 'react-hook-form';
+import { Image } from 'react-native';
+import { isValidNumber } from 'react-native-phone-number-input';
 import {
   CustomButton,
   CustomContainer,
-  CustomInput,
+  CustomPhoneInput,
   CustomSection,
   CustomText,
   MyArrowIcon,
   Space,
 } from '../../../components';
-import { NavigationProp } from '@react-navigation/native';
 import { appColors } from '../../../constants/appColors';
-import { Call } from 'iconsax-react-native';
 import { appFonts } from '../../../constants/appFonts';
 import { globalStyles } from '../../../styles/globalStyles';
 
@@ -20,7 +26,19 @@ interface EnterNumberProps {
 }
 
 const EnterNumber = ({ navigation }: EnterNumberProps) => {
-  const [number, setNumber] = useState<string>('');
+  const [country, setCountry] = useState<any>();
+
+  const { ...methods } = useForm<{ phoneNumber: string }>({ mode: 'onChange' });
+
+  const onError: SubmitErrorHandler<{ phoneNumber: string }> = (errors, e) => {
+    return console.log({ errors });
+  };
+
+  const onSubmit: SubmitHandler<{ phoneNumber: string }> = (data) => {
+    console.log(data);
+
+    navigation.navigate('EnterOtp');
+  };
 
   return (
     <CustomContainer
@@ -74,19 +92,26 @@ const EnterNumber = ({ navigation }: EnterNumberProps) => {
           fontSize={15}
         />
         <Space height={20} />
-        <CustomInput
-          placeholder="Phone number"
-          value={number}
-          onChange={(val) => setNumber(val)}
-          prefix={<Call size={22} color={appColors.gray} />}
-          allowClear
-          keyboardType="phone-pad"
-          customStyles={{ width: '65%' }}
-        />
+        <FormProvider {...methods}>
+          <CustomPhoneInput
+            defaultCode={'VN'}
+            name="phone-input"
+            rules={{
+              required: 'Phone number is required!',
+              validate: (value) => {
+                return (
+                  isValidNumber(value, country ? country.cca2 : 'VN') ||
+                  'Invalid phone number'
+                );
+              },
+            }}
+            onChangeCountry={(value) => setCountry(value)}
+          />
+        </FormProvider>
       </CustomSection>
 
       <CustomButton
-        onPress={() => navigation.navigate('EnterOtp')}
+        onPress={methods.handleSubmit(onSubmit, onError)}
         icon={<MyArrowIcon />}
         iconFlex="right"
         text="Get OTP"

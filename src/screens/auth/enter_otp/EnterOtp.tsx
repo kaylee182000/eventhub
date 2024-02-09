@@ -1,26 +1,40 @@
-import { NavigationProp } from '@react-navigation/native';
+import { NavigationProp, RouteProp } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { Image } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { authApi } from '../../../apis/auth.api';
 import {
   CustomButton,
   CustomContainer,
   CustomOtpInput,
   CustomSection,
   CustomText,
+  ModalLoading,
   MyArrowIcon,
 } from '../../../components';
 import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
+import { setIsAuthorized } from '../../../store/auth/authReducer';
 import { globalStyles } from '../../../styles/globalStyles';
+import { showToast } from '../../../utils';
 
 interface EnterOtpProps {
   navigation: NavigationProp<any, any>;
+  route: RouteProp<any>;
 }
 
-const EnterOtp = ({ navigation }: EnterOtpProps) => {
-  const [time, setTime] = useState<number>(60);
+const EnterOtp = ({ navigation, route }: EnterOtpProps) => {
+  const dispatch = useDispatch();
+
+  const [time, setTime] = useState<number>(120);
 
   const [displayText, setDisplayText] = useState<string>('');
+
+  const [serverPinCode, setServerPinCode] = useState<string>(
+    route.params?.code.toString(),
+  );
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [pinCode, setPinCode] = useState<string>('');
 
@@ -48,102 +62,161 @@ const EnterOtp = ({ navigation }: EnterOtpProps) => {
     return () => clearInterval(interval);
   }, [time]);
 
-  const onSendOtp = () => {
-    if (!pinCode) return;
-    navigation.navigate('ResetPassword');
+  const onSendOtp = async () => {
+    if (time === 0) {
+      showToast(
+        'The code has expired. Please resend code and try again.',
+        'info',
+      );
+      return;
+    } else {
+      if (pinCode !== serverPinCode) {
+        showToast(
+          'The OTP you have entered is incorrect. Please try again.',
+          'error',
+        );
+        return;
+      }
+      setIsLoading(true);
+      try {
+        const res = await authApi.Register({
+          email: route.params?.email,
+          password: route.params?.password,
+          username: route.params?.username,
+        });
+        if (res.data) {
+          dispatch(setIsAuthorized(true));
+          showToast('Your account has been created', 'success');
+          setIsLoading(false);
+        }
+      } catch (error) {
+        setIsLoading(false);
+        showToast('Try again later', 'error');
+      }
+    }
   };
+
+  const handleResendVerificationCode = async () => {
+    setIsLoading(true);
+    try {
+      const res = await authApi.SendVerificationCode({
+        email: route.params?.email,
+      });
+
+      if (res.data) {
+        setServerPinCode(res.data.code.toString());
+        setIsLoading(false);
+        setTime(120);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      showToast('Try again later', 'error');
+    }
+  };
+
   return (
-    <CustomContainer
-      isImageBackground
-      isScroll
-      showHeader
-      onPressNavigate={() => navigation.goBack()}
-    >
-      <CustomSection
-        styles={[
-          {
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: 16,
-          },
-        ]}
+    <>
+      <CustomContainer
+        isImageBackground
+        isScroll
+        showHeader
+        onPressNavigate={() => navigation.goBack()}
       >
-        <Image
-          source={require('../../../assets/img/otp-logo.png')}
-          style={{ width: 250, height: 250, resizeMode: 'contain' }}
-        />
-      </CustomSection>
-      <CustomSection
-        styles={[{ justifyContent: 'center', alignItems: 'center' }]}
-      >
-        <CustomText
-          text="Otp Verification"
-          title
-          styles={[{ marginTop: 24, letterSpacing: 1 }]}
-        />
+        <CustomSection
+          styles={[
+            {
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginTop: 16,
+            },
+          ]}
+        >
+          <Image
+            source={require('../../../assets/img/otp-logo.png')}
+            style={{ width: 250, height: 250, resizeMode: 'contain' }}
+          />
+        </CustomSection>
+        <CustomSection
+          styles={[{ justifyContent: 'center', alignItems: 'center' }]}
+        >
+          <CustomText
+            text="Otp Verification"
+            title
+            styles={[{ marginTop: 24, letterSpacing: 1 }]}
+          />
+          <CustomSection
+            styles={[
+              globalStyles.row,
+              {
+                justifyContent: 'center',
+                marginVertical: 24,
+                flexDirection: 'column',
+                gap: 12,
+              },
+            ]}
+          >
+            <CustomText
+              text={'Enter the Otp sent to '}
+              styles={[
+                {
+                  lineHeight: 20,
+                  fontSize: 15,
+                },
+              ]}
+            />
+            <CustomText
+              text={route.params?.email}
+              styles={[
+                {
+                  lineHeight: 20,
+                  fontSize: 15,
+                  fontFamily: appFonts.extra_bold,
+                },
+              ]}
+            />
+          </CustomSection>
+
+          <CustomOtpInput onComplete={(val) => setPinCode(val)} />
+        </CustomSection>
         <CustomSection
           styles={[
             globalStyles.row,
-            { justifyContent: 'center', marginVertical: 24 },
+            { justifyContent: 'center', marginTop: 24 },
           ]}
         >
-          <CustomText
-            text={'Enter the Otp sent to '}
-            styles={[
-              {
-                lineHeight: 20,
-                fontSize: 15,
-              },
-            ]}
-          />
-          <CustomText
-            text={'090973535'}
-            styles={[
-              {
-                lineHeight: 20,
-                fontSize: 15,
-                fontFamily: appFonts.extra_bold,
-              },
-            ]}
+          <CustomText text={`Resend code in `} fontSize={15} />
+          <CustomButton
+            onPress={handleResendVerificationCode}
+            type="text"
+            text={displayText ? displayText : '02:00'}
+            textStyles={{
+              color: appColors.primary,
+              fontSize: 15,
+              fontFamily: appFonts.bold,
+            }}
           />
         </CustomSection>
 
-        <CustomOtpInput onComplete={(val) => setPinCode(val)} />
-      </CustomSection>
-      <CustomSection
-        styles={[globalStyles.row, { justifyContent: 'center', marginTop: 24 }]}
-      >
-        <CustomText text={`Resend code in `} fontSize={15} />
         <CustomButton
-          onPress={() => {}}
-          type="text"
-          text={displayText ? displayText : '01:00'}
+          onPress={onSendOtp}
+          icon={<MyArrowIcon />}
+          iconFlex="right"
+          text="Send OTP"
+          type="primary"
           textStyles={{
-            color: appColors.primary,
-            fontSize: 15,
-            fontFamily: appFonts.bold,
+            textAlign: 'center',
+            fontFamily: appFonts.medium,
+            fontSize: 16,
+            letterSpacing: 1,
           }}
+          styles={[
+            globalStyles.shadow,
+            { width: 271, alignSelf: 'center', marginVertical: 30 },
+          ]}
         />
-      </CustomSection>
-
-      <CustomButton
-        onPress={onSendOtp}
-        icon={<MyArrowIcon />}
-        iconFlex="right"
-        text="Send OTP"
-        type="primary"
-        textStyles={{
-          textAlign: 'center',
-          fontFamily: appFonts.medium,
-          fontSize: 16,
-          letterSpacing: 1,
-        }}
-        styles={[
-          globalStyles.shadow,
-          { width: 271, alignSelf: 'center', marginVertical: 30 },
-        ]}
-      />
-    </CustomContainer>
+      </CustomContainer>
+      {isLoading && <ModalLoading isVisible={isLoading} />}
+    </>
   );
 };
 
