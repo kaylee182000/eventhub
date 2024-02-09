@@ -62,10 +62,13 @@ const SignUp = ({ navigation }: SignUpProps) => {
         });
         setIsLoading(false);
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
       setIsLoading(false);
-      showToast('Try again later', 'error');
+      if (error.message === '400') {
+        showToast('User already exists', 'error');
+      } else {
+        showToast('Try again later', 'error');
+      }
     }
   };
 

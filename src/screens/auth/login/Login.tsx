@@ -78,10 +78,16 @@ const Login = ({ navigation }: LoginProps) => {
         }
         showToast('Login successful!', 'success');
       }
-    } catch (error) {
-      console.error(error);
+    } catch (error: any) {
       setIsLoading(false);
-      showToast('Try again later', 'error');
+
+      if (error.message === '403') {
+        showToast('User not found', 'error');
+      } else if (error.message === '401') {
+        showToast('Email or Password is not correct', 'error');
+      } else {
+        showToast('Try again later', 'error');
+      }
     }
   };
 

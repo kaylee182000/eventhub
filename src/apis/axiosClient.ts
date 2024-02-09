@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import queryString from 'query-string';
 import { appInfos } from '../constants/appInfo';
 
@@ -26,9 +26,9 @@ axiosClient.interceptors.response.use(
     }
     throw new Error('Error: ' + res.status);
   },
-  (error) => {
-    console.error(`Error api ${JSON.stringify(error)}`);
-    throw new Error(error.response);
+  (error: AxiosError) => {
+    // console.error({ error: error });
+    throw new Error(JSON.stringify(error.response?.status));
   },
 );
 

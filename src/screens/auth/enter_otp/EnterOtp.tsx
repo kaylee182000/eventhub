@@ -86,9 +86,10 @@ const EnterOtp = ({ navigation, route }: EnterOtpProps) => {
         });
         if (res.data) {
           dispatch(setIsAuthorized(true));
+          showToast('Your account has been created', 'success');
+          setIsLoading(false);
         }
       } catch (error) {
-        console.error(error);
         setIsLoading(false);
         showToast('Try again later', 'error');
       }
@@ -147,7 +148,12 @@ const EnterOtp = ({ navigation, route }: EnterOtpProps) => {
           <CustomSection
             styles={[
               globalStyles.row,
-              { justifyContent: 'center', marginVertical: 24 },
+              {
+                justifyContent: 'center',
+                marginVertical: 24,
+                flexDirection: 'column',
+                gap: 12,
+              },
             ]}
           >
             <CustomText
