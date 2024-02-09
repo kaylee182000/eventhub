@@ -1,6 +1,7 @@
 import {
   LoginBodyResquest,
   RegisterBodyResquest,
+  ResetPasswordBodyRequest,
   SendVerificationBodyResquest,
 } from '../types/auth.types';
 import axiosClient from './axiosClient';
@@ -14,5 +15,8 @@ export const authApi = {
   },
   SendVerificationCode(body: SendVerificationBodyResquest) {
     return axiosClient.post('/auth/verification', body);
+  },
+  ResetPassword(body: ResetPasswordBodyRequest) {
+    return axiosClient.post('/auth/reset-password', body);
   },
 };

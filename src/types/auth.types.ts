@@ -12,3 +12,7 @@ export interface LoginBodyResquest {
 export interface SendVerificationBodyResquest {
   email: string;
 }
+
+export interface ResetPasswordBodyRequest {
+  email: string;
+}
