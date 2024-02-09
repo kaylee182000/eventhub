@@ -109,7 +109,6 @@ const EnterOtp = ({ navigation, route }: EnterOtpProps) => {
         setTime(120);
       }
     } catch (error) {
-      console.error(error);
       setIsLoading(false);
       showToast('Try again later', 'error');
     }
