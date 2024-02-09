@@ -54,10 +54,6 @@ const ResetPassword = ({ navigation }: ResetPasswordProps) => {
     }
   };
 
-  const onError: SubmitErrorHandler<{ email: string }> = (errors, e) => {
-    return console.log({ errors });
-  };
-
   return (
     <>
       <CustomContainer
@@ -139,7 +135,7 @@ const ResetPassword = ({ navigation }: ResetPasswordProps) => {
         /> */}
         </CustomSection>
         <CustomButton
-          onPress={methods.handleSubmit(onSubmit, onError)}
+          onPress={methods.handleSubmit(onSubmit)}
           icon={<MyArrowIcon />}
           iconFlex="right"
           text="Send"

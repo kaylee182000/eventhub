@@ -91,10 +91,6 @@ const Login = ({ navigation }: LoginProps) => {
     }
   };
 
-  const onError: SubmitErrorHandler<FormValue> = (errors, e) => {
-    return console.log({ errors });
-  };
-
   const PrefixSvgIcon = (icon: string) => {
     if (icon === 'Facebook') {
       return (
@@ -189,7 +185,7 @@ const Login = ({ navigation }: LoginProps) => {
           </View>
 
           <CustomButton
-            onPress={methods.handleSubmit(onSubmit, onError)}
+            onPress={methods.handleSubmit(onSubmit)}
             text="SIGN IN"
             icon={<MyArrowIcon />}
             iconFlex="right"
