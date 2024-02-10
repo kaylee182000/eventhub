@@ -80,7 +80,7 @@ const ResetPassword = ({ navigation }: ResetPasswordProps) => {
           styles={[{ justifyContent: 'center', alignItems: 'center' }]}
         >
           <CustomText
-            text="Otp Verification"
+            text="Reset Password"
             title
             styles={[{ marginTop: 24, letterSpacing: 1 }]}
           />
