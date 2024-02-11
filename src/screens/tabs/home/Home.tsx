@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setIsAuthorized } from '../../store/auth/authReducer';
+import { setIsAuthorized } from '../../../store/auth/authReducer';
 import { NavigationProp } from '@react-navigation/native';
 
 interface HomeProps {
