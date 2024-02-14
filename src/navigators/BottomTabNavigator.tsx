@@ -36,10 +36,10 @@ const BottomTabNavigator = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
-          height: 80,
+          height: 72,
           justifyContent: 'center',
           alignItems: 'center',
-          paddingBottom: 12,
+          paddingBottom: 8,
         },
         tabBarIcon: ({ color, size, focused }) => {
           let icon: ReactNode | React.JSX.Element;
@@ -73,7 +73,7 @@ const BottomTabNavigator = () => {
             <>
               {route.name === 'AddEvent' ? null : (
                 <CustomText
-                  text={route.name}
+                  text={route.name === 'Home' ? 'Explore' : route.name}
                   color={focused ? appColors.primary : appColors.gray}
                 />
               )}
