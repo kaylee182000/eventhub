@@ -21,6 +21,7 @@ const CustomContainer = (props: CustomContainerProps) => {
     showHeader,
     onPressNavigate,
   } = props;
+  console.log(isScroll);
 
   const returnContainer = () => {
     if (isScroll) {
@@ -46,7 +47,7 @@ const CustomContainer = (props: CustomContainerProps) => {
       {showHeader && onPressNavigate && (
         <CustomHeader onPress={onPressNavigate} />
       )}
-      <View>{returnContainer()}</View>
+      {returnContainer()}
     </SafeAreaView>
   );
 };
