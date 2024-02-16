@@ -21,7 +21,6 @@ const CustomContainer = (props: CustomContainerProps) => {
     showHeader,
     onPressNavigate,
   } = props;
-  console.log(isScroll);
 
   const returnContainer = () => {
     if (isScroll) {

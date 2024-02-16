@@ -11,4 +11,8 @@ export const appColors = {
   blackHighOpacity: '#00000090',
   link: '#5669FF',
   errorColor: '#c0392b',
+  sportEvent: '#F0635A',
+  musicEvent: '#F59762',
+  foodEvent: '#29D697',
+  artEvent: '#46CDFB',
 };
