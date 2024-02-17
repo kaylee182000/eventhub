@@ -8,5 +8,5 @@ export const appInfos = {
 
   // BASE_URL: 'http://192.168.40.1:8080/api/v1',
   // BASE_URL: 'http://192.168.1.13:8080/api/v1',
-  BASE_URL: 'http://192.168.2.24:8080/api/v1',
+  BASE_URL: 'http://192.168.1.11:8080/api/v1',
 };

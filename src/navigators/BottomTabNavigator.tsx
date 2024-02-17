@@ -11,11 +11,21 @@ import {
 } from 'iconsax-react-native';
 import { CustomText } from '../components';
 import { View } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+const Stack = createNativeStackNavigator();
+
+const HomeStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Home" component={Home} />
+    </Stack.Navigator>
+  );
+};
 
 const BottomTabNavigator = () => {
   const Tab = createBottomTabNavigator();
 
-  const AddEventView = ({ size }: { size: number }) => {
+  const AddEventView = () => {
     return (
       <View
         style={{
@@ -45,14 +55,14 @@ const BottomTabNavigator = () => {
           let icon: ReactNode | React.JSX.Element;
           color = focused ? appColors.primary : appColors.gray;
           switch (route.name) {
-            case 'Home':
+            case 'Explore':
               icon = <Discover size={size} color={color} variant="Bold" />;
               break;
             case 'Event':
               icon = <Calendar size={size} color={color} variant="Bold" />;
               break;
             case 'AddEvent':
-              icon = <AddEventView size={size} />;
+              icon = <AddEventView />;
               break;
             case 'Map':
               icon = <Location size={size} color={color} variant="Bold" />;
@@ -67,13 +77,12 @@ const BottomTabNavigator = () => {
 
           return icon;
         },
-        // tabBarShowLabel: false,
         tabBarLabel: ({ focused }) => {
           return (
             <>
               {route.name === 'AddEvent' ? null : (
                 <CustomText
-                  text={route.name === 'Home' ? 'Explore' : route.name}
+                  text={route.name}
                   color={focused ? appColors.primary : appColors.gray}
                 />
               )}
@@ -82,7 +91,7 @@ const BottomTabNavigator = () => {
         },
       })}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Explore" component={HomeStack} />
       <Tab.Screen name="Event" component={Event} />
       <Tab.Screen name="AddEvent" component={AddEvent} />
       <Tab.Screen name="Map" component={Map} />

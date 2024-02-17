@@ -10,6 +10,7 @@ import Event from './tabs/event/Event';
 import AddEvent from './tabs/add_event/AddEvent';
 import Profile from './tabs/profile/Profile';
 import Map from './tabs/map/Map';
+import Search from './search/Search';
 
 export {
   Login,
@@ -24,4 +25,5 @@ export {
   AddEvent,
   Map,
   Profile,
+  Search,
 };

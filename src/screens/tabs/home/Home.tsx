@@ -98,7 +98,7 @@ const Home = ({ navigation }: HomeProps) => {
       <CustomContainer isScroll>
         <View style={[styles.headerContainer]}>
           <View style={[globalStyles.row, { flex: 0, display: 'flex' }]}>
-            <TouchableOpacity onPress={() => console.log('hi')}>
+            <TouchableOpacity onPress={() => dispatch(setIsAuthorized(false))}>
               <HambergerMenu size="24" color={appColors.white} />
             </TouchableOpacity>
             <Space width={24} />
@@ -128,7 +128,10 @@ const Home = ({ navigation }: HomeProps) => {
             <View
               style={[globalStyles.row, { flex: 0, display: 'flex', gap: 4 }]}
             >
-              <TouchableOpacity style={[styles.notiButton]}>
+              <TouchableOpacity
+                style={[styles.notiButton]}
+                onPress={() => navigation.navigate('Search')}
+              >
                 <SearchNormal1 size="24" color={appColors.white} />
               </TouchableOpacity>
               <TouchableOpacity style={[styles.notiButton]}>

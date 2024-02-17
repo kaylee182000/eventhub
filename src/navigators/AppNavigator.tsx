@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Splash } from '../screens';
 import { rootState } from '../store';
 import AuthNavigator from './AuthNavigator';
-import MainNavigator from './MainNavigator';
+import BottomTabNavigator from './BottomTabNavigator';
 
 const AppNavigator = () => {
   const auth = useSelector((state: rootState) => state.auth);
@@ -23,7 +23,7 @@ const AppNavigator = () => {
       {isShowSplash ? (
         <Splash />
       ) : auth.isAuthorized ? (
-        <MainNavigator />
+        <BottomTabNavigator />
       ) : (
         <AuthNavigator />
       )}
