@@ -94,7 +94,7 @@ const Home = ({ navigation }: HomeProps) => {
   };
 
   return (
-    <View style={[globalStyles.container]}>
+    <View style={[globalStyles.container, { backgroundColor: 'transparent' }]}>
       <CustomContainer isScroll>
         <View style={[styles.headerContainer]}>
           <View style={[globalStyles.row, { flex: 0, display: 'flex' }]}>
@@ -134,7 +134,10 @@ const Home = ({ navigation }: HomeProps) => {
               >
                 <SearchNormal1 size="24" color={appColors.white} />
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.notiButton]}>
+              <TouchableOpacity
+                style={[styles.notiButton]}
+                onPress={() => navigation.navigate('Notification')}
+              >
                 <Notification size="24" color={appColors.white} />
               </TouchableOpacity>
             </View>
@@ -145,6 +148,9 @@ const Home = ({ navigation }: HomeProps) => {
             </View>
           </ScrollView>
         </View>
+
+        {/* body */}
+        <View></View>
       </CustomContainer>
     </View>
   );

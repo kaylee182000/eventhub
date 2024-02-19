@@ -11,6 +11,7 @@ import AddEvent from './tabs/add_event/AddEvent';
 import Profile from './tabs/profile/Profile';
 import Map from './tabs/map/Map';
 import Search from './search/Search';
+import Notification from './notification/Notification';
 
 export {
   Login,
@@ -26,4 +27,5 @@ export {
   Map,
   Profile,
   Search,
+  Notification,
 };

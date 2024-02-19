@@ -1,6 +1,14 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { ReactNode } from 'react';
-import { Home, Event, AddEvent, Map, Profile, Search } from '../screens';
+import {
+  Home,
+  Event,
+  AddEvent,
+  Map,
+  Profile,
+  Search,
+  Notification,
+} from '../screens';
 import { appColors } from '../constants/appColors';
 import {
   AddSquare,
@@ -19,6 +27,7 @@ const HomeStack = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="Search" component={Search} />
+      <Stack.Screen name="Notification" component={Notification} />
     </Stack.Navigator>
   );
 };
