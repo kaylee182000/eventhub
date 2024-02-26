@@ -12,6 +12,7 @@ import { setIsAuthorized } from '../../../store/auth/authReducer';
 import { NavigationProp } from '@react-navigation/native';
 import { globalStyles } from '../../../styles/globalStyles';
 import {
+  CustomButton,
   CustomContainer,
   CustomSection,
   CustomText,
@@ -19,6 +20,7 @@ import {
 } from '../../../components';
 import { appColors } from '../../../constants/appColors';
 import {
+  ArrowRight2,
   HambergerMenu,
   Notification,
   SearchNormal1,
@@ -150,7 +152,24 @@ const Home = ({ navigation }: HomeProps) => {
         </View>
 
         {/* body */}
-        <View></View>
+        <View style={[styles.bodyContainer]}>
+          <View style={[globalStyles.row, { marginTop: 22 }]}>
+            <CustomText
+              text="Upcoming Events"
+              fontSize={20}
+              fontFamily={appFonts.medium}
+            />
+            <View style={[globalStyles.row, { justifyContent: 'flex-end' }]}>
+              <CustomButton
+                text="See All"
+                onPress={() => console.log('see all')}
+                type="text"
+                textStyles={{ color: appColors.gray, fontSize: 16 }}
+              />
+              <ArrowRight2 color={appColors.gray} variant="Bold" size={16} />
+            </View>
+          </View>
+        </View>
       </CustomContainer>
     </View>
   );
@@ -193,6 +212,9 @@ const styles = StyleSheet.create({
     height: 40,
     paddingHorizontal: 8,
     borderRadius: 20,
+  },
+  bodyContainer: {
+    paddingHorizontal: 24,
   },
 });
 
