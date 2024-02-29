@@ -15,7 +15,6 @@ import {
   CustomButton,
   CustomContainer,
   CustomEventCard,
-  CustomSection,
   CustomText,
   Space,
 } from '../../../components';
@@ -138,12 +137,18 @@ const Home = ({ navigation }: HomeProps) => {
 
   const renderEventCard = () => {
     return dummyEventData.map((data, index) => {
-      return <CustomEventCard key={index} eventData={data} />;
+      return (
+        <CustomEventCard
+          key={index}
+          eventData={data}
+          onPressCard={() => console.log('hi')}
+        />
+      );
     });
   };
 
   return (
-    <View style={[globalStyles.container, { backgroundColor: 'transparent' }]}>
+    <View style={[globalStyles.container, { backgroundColor: 'white' }]}>
       <View style={[styles.headerContainer]}>
         <View style={[globalStyles.row, { flex: 0, display: 'flex' }]}>
           <TouchableOpacity onPress={() => dispatch(setIsAuthorized(false))}>
@@ -272,7 +277,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     gap: 16,
-    marginBottom: 12,
+    marginVertical: 12,
   },
 });
 

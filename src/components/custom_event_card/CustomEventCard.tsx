@@ -1,5 +1,6 @@
-import { View, Text } from 'react-native';
 import React from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { globalStyles } from '../../styles/globalStyles';
 
 interface CustomEventCardProps {
   eventData: {
@@ -9,14 +10,27 @@ interface CustomEventCardProps {
     address: string;
     bookmark: boolean;
   };
+  onPressCard: () => void;
 }
 
-const CustomEventCard = ({ eventData }: CustomEventCardProps) => {
+const CustomEventCard = ({ eventData, onPressCard }: CustomEventCardProps) => {
   return (
-    <View>
-      <Text>{eventData.name}</Text>
-    </View>
+    <Pressable onPress={onPressCard}>
+      <View style={[globalStyles.shadow, styles.container]}>
+        <Text>{eventData.name}</Text>
+      </View>
+    </Pressable>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: 250,
+    height: 250,
+    padding: 8,
+    borderRadius: 12,
+    backgroundColor: 'white',
+  },
+});
 
 export default CustomEventCard;
