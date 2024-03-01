@@ -16,4 +16,6 @@ export const appColors = {
   orange: '#F59762',
   green: '#29D697',
   blue: '#46CDFB',
+  skyOpacity: '#00F8FF50',
+  sky: '#00F8FF',
 };

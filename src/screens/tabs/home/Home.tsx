@@ -5,6 +5,7 @@ import {
   StatusBar,
   StyleSheet,
   ScrollView,
+  Image,
 } from 'react-native';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -242,6 +243,38 @@ const Home = ({ navigation }: HomeProps) => {
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             <View style={[styles.cardContainer]}>{renderEventCard()}</View>
           </ScrollView>
+
+          <View style={[styles.bannerContainer]}>
+            <View style={[styles.bannerContent]}>
+              <CustomText
+                text="Invite your friends"
+                fontSize={18}
+                fontFamily={appFonts.bold}
+              />
+              <CustomText
+                text="Get $20 for ticket"
+                color={appColors.gray}
+                fontFamily={appFonts.medium}
+              />
+              <CustomButton
+                onPress={() => {}}
+                text="INVITE"
+                type="primary"
+                styles={[styles.bannerButton]}
+                textStyles={[styles.bannerButtonText]}
+              />
+            </View>
+            <Image
+              source={require('../../../assets/img/banner-img.png')}
+              style={{
+                width: 320,
+                height: 160,
+                resizeMode: 'cover',
+                position: 'absolute',
+                right: -10,
+              }}
+            />
+          </View>
         </View>
       </CustomContainer>
     </View>
@@ -296,6 +329,29 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     gap: 16,
     marginVertical: 12,
+  },
+  bannerContainer: {
+    backgroundColor: appColors.skyOpacity,
+    height: 130,
+    width: '100%',
+    borderRadius: 12,
+    marginTop: 24,
+  },
+  bannerContent: {
+    padding: 18,
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  bannerButton: {
+    width: 80,
+    height: 32,
+    backgroundColor: appColors.sky,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+  },
+  bannerButtonText: {
+    fontSize: 14,
+    fontFamily: appFonts.bold,
   },
 });
 
