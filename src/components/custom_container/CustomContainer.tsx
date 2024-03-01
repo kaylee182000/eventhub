@@ -24,7 +24,11 @@ const CustomContainer = (props: CustomContainerProps) => {
 
   const returnContainer = () => {
     if (isScroll) {
-      return <ScrollView style={[{ flex: 1 }]}>{children}</ScrollView>;
+      return (
+        <ScrollView showsVerticalScrollIndicator={false} style={[{ flex: 1 }]}>
+          {children}
+        </ScrollView>
+      );
     } else {
       return <View style={[{ flex: 1 }]}>{children}</View>;
     }

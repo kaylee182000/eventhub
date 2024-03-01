@@ -1,4 +1,4 @@
-import { View, Text, TextStyle, StyleProp } from 'react-native';
+import { Text, TextStyle, StyleProp } from 'react-native';
 import React from 'react';
 import { globalStyles } from '../../styles/globalStyles';
 import { appColors } from '../../constants/appColors';
@@ -12,12 +12,23 @@ interface CustomTextProps {
   title?: boolean;
   styles?: StyleProp<TextStyle>;
   flex?: number;
+  numberOfLines?: number;
 }
 
 const CustomText = (props: CustomTextProps) => {
-  const { text, color, fontSize, fontFamily, styles, title, flex } = props;
+  const {
+    text,
+    color,
+    fontSize,
+    fontFamily,
+    styles,
+    title,
+    flex,
+    numberOfLines,
+  } = props;
   return (
     <Text
+      numberOfLines={numberOfLines}
       style={[
         globalStyles.primaryText,
         {
