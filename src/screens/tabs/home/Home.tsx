@@ -145,17 +145,32 @@ const Home = ({ navigation }: HomeProps) => {
     });
   };
 
-  const renderEventCard = () => {
-    return dummyEventData.map((data, index) => {
-      return (
-        <CustomEventCard
-          key={index}
-          eventData={data}
-          onPressCard={() => console.log('hi')}
-          onPressBooknark={() => onPressBooknark(index)}
-        />
-      );
-    });
+  const renderEventCard = (type: string) => {
+    if (type === 'all') {
+      return dummyEventData.map((data, index) => {
+        return (
+          <CustomEventCard
+            key={index}
+            eventData={data}
+            onPressCard={() => console.log('hi')}
+            onPressBooknark={() => onPressBooknark(index)}
+          />
+        );
+      });
+    } else if (type === 'nearby') {
+      return dummyEventData
+        .filter((el) => el.address === 'SECC')
+        .map((data, index) => {
+          return (
+            <CustomEventCard
+              key={index}
+              eventData={data}
+              onPressCard={() => console.log('hi')}
+              onPressBooknark={() => onPressBooknark(index)}
+            />
+          );
+        });
+    }
   };
 
   const onPressBooknark = (index: number) => {
@@ -241,7 +256,7 @@ const Home = ({ navigation }: HomeProps) => {
           </View>
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <View style={[styles.cardContainer]}>{renderEventCard()}</View>
+            <View style={[styles.cardContainer]}>{renderEventCard('all')}</View>
           </ScrollView>
 
           <View style={[styles.bannerContainer]}>
@@ -275,6 +290,29 @@ const Home = ({ navigation }: HomeProps) => {
               }}
             />
           </View>
+
+          <View style={[globalStyles.row, { marginTop: 22 }]}>
+            <CustomText
+              text="Nearby You"
+              fontSize={20}
+              fontFamily={appFonts.medium}
+            />
+            <View style={[globalStyles.row, { justifyContent: 'flex-end' }]}>
+              <CustomButton
+                text="See All"
+                onPress={() => console.log('see all')}
+                type="text"
+                textStyles={{ color: appColors.gray, fontSize: 16 }}
+              />
+              <ArrowRight2 color={appColors.gray} variant="Bold" size={16} />
+            </View>
+          </View>
+
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <View style={[styles.cardContainer]}>
+              {renderEventCard('nearby')}
+            </View>
+          </ScrollView>
         </View>
       </CustomContainer>
     </View>
@@ -328,14 +366,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'flex-end',
     gap: 16,
-    marginVertical: 12,
+    marginVertical: 16,
   },
   bannerContainer: {
     backgroundColor: appColors.skyOpacity,
     height: 130,
     width: '100%',
     borderRadius: 12,
-    marginTop: 24,
+    marginTop: 20,
   },
   bannerContent: {
     padding: 18,
