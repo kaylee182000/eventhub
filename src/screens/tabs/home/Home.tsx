@@ -7,7 +7,7 @@ import {
   ScrollView,
   Image,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setIsAuthorized } from '../../../store/auth/authReducer';
 import { NavigationProp } from '@react-navigation/native';
@@ -30,6 +30,7 @@ import FontAwesome6 from 'react-native-vector-icons/FontAwesome6';
 import { appFonts } from '../../../constants/appFonts';
 import { SvgXml } from 'react-native-svg';
 import { AppIcon } from '../../../assets/svg_icons';
+import Geolocation from '@react-native-community/geolocation';
 
 interface HomeProps {
   navigation: NavigationProp<any, any>;
@@ -46,6 +47,21 @@ interface DummyEventDataType {
 
 const Home = ({ navigation }: HomeProps) => {
   const dispatch = useDispatch();
+  useEffect(() => {
+    getCurrentPosition();
+  }, []);
+
+  //test
+  const getCurrentPosition = () => {
+    Geolocation.getCurrentPosition(
+      (pos: any) => {
+        console.log(JSON.stringify(pos));
+      },
+      (error: any) =>
+        console.error('GetCurrentPosition Error', JSON.stringify(error)),
+      { enableHighAccuracy: true },
+    );
+  };
 
   const date = new Date();
   const eventTypeData = [
