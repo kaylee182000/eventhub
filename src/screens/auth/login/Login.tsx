@@ -26,6 +26,7 @@ import { authApi } from '../../../apis/auth.api';
 import {
   setIsAuthorized,
   setStoredEmail,
+  setUserData,
 } from '../../../store/auth/authReducer';
 import { useDispatch, useSelector } from 'react-redux';
 import { rootState } from '../../../store';
@@ -65,12 +66,14 @@ const Login = ({ navigation }: LoginProps) => {
         password: password,
       });
       if (res.data) {
+        const { username, email, photoUrl } = res.data.user;
         methods.reset({
           password: '',
           email: '',
         });
         setIsLoading(false);
         dispatch(setIsAuthorized(true));
+        dispatch(setUserData({ username, email, photoUrl }));
         if (isRemember) {
           dispatch(setStoredEmail(email));
         } else {
