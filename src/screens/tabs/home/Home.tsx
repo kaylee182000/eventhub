@@ -10,7 +10,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setIsAuthorized } from '../../../store/auth/authReducer';
-import { NavigationProp } from '@react-navigation/native';
+import { DrawerActions, NavigationProp } from '@react-navigation/native';
 import { globalStyles } from '../../../styles/globalStyles';
 import {
   CustomButton,
@@ -201,7 +201,9 @@ const Home = ({ navigation }: HomeProps) => {
     <View style={[globalStyles.container, { backgroundColor: 'white' }]}>
       <View style={[styles.headerContainer]}>
         <View style={[globalStyles.row, { flex: 0, display: 'flex' }]}>
-          <TouchableOpacity onPress={() => dispatch(setIsAuthorized(false))}>
+          <TouchableOpacity
+            onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+          >
             <HambergerMenu size="24" color={appColors.white} />
           </TouchableOpacity>
           <Space width={24} />

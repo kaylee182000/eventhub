@@ -4,6 +4,7 @@ import { Splash } from '../screens';
 import { rootState } from '../store';
 import AuthNavigator from './AuthNavigator';
 import BottomTabNavigator from './BottomTabNavigator';
+import DrawerNavigator from './DrawerNavigator';
 
 const AppNavigator = () => {
   const auth = useSelector((state: rootState) => state.auth);
@@ -23,7 +24,7 @@ const AppNavigator = () => {
       {isShowSplash ? (
         <Splash />
       ) : auth.isAuthorized ? (
-        <BottomTabNavigator />
+        <DrawerNavigator />
       ) : (
         <AuthNavigator />
       )}
