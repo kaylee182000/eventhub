@@ -14,7 +14,7 @@ import {
 } from '../../../components';
 import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
-import { setIsAuthorized } from '../../../store/auth/authReducer';
+import { setIsAuthorized, setUserData } from '../../../store/auth/authReducer';
 import { globalStyles } from '../../../styles/globalStyles';
 import { showToast } from '../../../utils';
 
@@ -85,7 +85,9 @@ const EnterOtp = ({ navigation, route }: EnterOtpProps) => {
           username: route.params?.username,
         });
         if (res.data) {
+          const { username, email, photoUrl } = res.data.user;
           dispatch(setIsAuthorized(true));
+          dispatch(setUserData({ username, email, photoUrl }));
           showToast('Your account has been created', 'success');
           setIsLoading(false);
         }

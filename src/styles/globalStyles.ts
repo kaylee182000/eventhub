@@ -5,7 +5,7 @@ import { appFonts } from '../constants/appFonts';
 export const globalStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: appColors.white,
+    backgroundColor: 'appColors.white',
   },
   primaryText: {
     color: appColors.text,
@@ -37,7 +37,7 @@ export const globalStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
     shadowRadius: 8,
-    elevation: 6,
+    elevation: 8,
   },
   header: {
     height: 75,

@@ -1,6 +1,8 @@
 import CustomOtpInput from './custom-otp-input/CustomOtpInput';
 import CustomButton from './custom_button/CustomButton';
 import CustomContainer from './custom_container/CustomContainer';
+import CustomDrawer from './custom_drawer/CustomDrawer';
+import CustomEventCard from './custom_event_card/CustomEventCard';
 import CustomHeader from './custom_header/CustomHeader';
 import CustomInput from './custom_input/CustomInput';
 import ModalLoading from './custom_modal/ModalLoading';
@@ -22,4 +24,6 @@ export {
   MyArrowIcon,
   ModalLoading,
   CustomPhoneInput,
+  CustomEventCard,
+  CustomDrawer,
 };
