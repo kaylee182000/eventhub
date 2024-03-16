@@ -1,6 +1,10 @@
-import { View, Text, Image, Switch } from 'react-native';
+import { NavigationProp } from '@react-navigation/native';
+import { Lock, Sms } from 'iconsax-react-native';
 import React, { useEffect, useState } from 'react';
-import { globalStyles } from '../../../styles/globalStyles';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { Image, Switch, View } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { authApi } from '../../../apis/auth.api';
 import {
   CustomButton,
   CustomContainer,
@@ -9,27 +13,18 @@ import {
   CustomText,
   ModalLoading,
   MyArrowIcon,
-  Space,
 } from '../../../components';
-import { ArrowRight, Lock, Sms } from 'iconsax-react-native';
 import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
-import { NavigationProp } from '@react-navigation/native';
-import {
-  FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useForm,
-} from 'react-hook-form';
-import { showToast } from '../../../utils';
-import { authApi } from '../../../apis/auth.api';
+import { rootState } from '../../../store';
 import {
   setIsAuthorized,
   setStoredEmail,
   setUserData,
 } from '../../../store/auth/authReducer';
-import { useDispatch, useSelector } from 'react-redux';
-import { rootState } from '../../../store';
+import { globalStyles } from '../../../styles/globalStyles';
+import { showToast } from '../../../utils';
+import SocialLogin from '../components/SocialLogin';
 
 interface LoginProps {
   navigation: NavigationProp<any, any>;
@@ -91,26 +86,6 @@ const Login = ({ navigation }: LoginProps) => {
       } else {
         showToast('Try again later', 'error');
       }
-    }
-  };
-
-  const PrefixSvgIcon = (icon: string) => {
-    if (icon === 'Facebook') {
-      return (
-        <Image
-          source={require('../../../assets/img/facebook-icon.png')}
-          width={30}
-          height={30}
-        />
-      );
-    } else {
-      return (
-        <Image
-          source={require('../../../assets/img/google-icon.png')}
-          width={30}
-          height={30}
-        />
-      );
     }
   };
 
@@ -211,50 +186,7 @@ const Login = ({ navigation }: LoginProps) => {
             fontFamily={appFonts.medium}
             styles={{ textAlign: 'center', marginBottom: 6 }}
           />
-          <CustomButton
-            onPress={() => {}}
-            text="Login with Google"
-            icon={PrefixSvgIcon('Google')}
-            iconFlex="left"
-            type="primary"
-            textStyles={{
-              textAlign: 'center',
-              fontFamily: appFonts.regular,
-              fontSize: 16,
-              color: appColors.black,
-            }}
-            styles={[
-              globalStyles.shadow,
-              {
-                width: 271,
-                alignSelf: 'center',
-                backgroundColor: appColors.white,
-                marginBottom: 18,
-              },
-            ]}
-          />
-          <CustomButton
-            onPress={() => {}}
-            text="Login with Facebook"
-            icon={PrefixSvgIcon('Facebook')}
-            iconFlex="left"
-            type="primary"
-            textStyles={{
-              textAlign: 'center',
-              fontFamily: appFonts.regular,
-              fontSize: 16,
-              color: appColors.black,
-            }}
-            styles={[
-              globalStyles.shadow,
-              {
-                width: 271,
-                alignSelf: 'center',
-                backgroundColor: appColors.white,
-                marginBottom: 18,
-              },
-            ]}
-          />
+          <SocialLogin />
           <View
             style={[globalStyles.row, { justifyContent: 'center', gap: 8 }]}
           >

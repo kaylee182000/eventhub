@@ -1,13 +1,8 @@
 import { NavigationProp } from '@react-navigation/native';
 import { Lock, Sms, User } from 'iconsax-react-native';
 import React, { useState } from 'react';
-import {
-  FormProvider,
-  SubmitErrorHandler,
-  SubmitHandler,
-  useForm,
-} from 'react-hook-form';
-import { Image, View } from 'react-native';
+import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
+import { View } from 'react-native';
 import { authApi } from '../../../apis/auth.api';
 import {
   CustomButton,
@@ -22,6 +17,7 @@ import { appColors } from '../../../constants/appColors';
 import { appFonts } from '../../../constants/appFonts';
 import { globalStyles } from '../../../styles/globalStyles';
 import { showToast } from '../../../utils';
+import SocialLogin from '../components/SocialLogin';
 
 interface SignUpProps {
   navigation: NavigationProp<any, any>;
@@ -69,26 +65,6 @@ const SignUp = ({ navigation }: SignUpProps) => {
       } else {
         showToast('Try again later', 'error');
       }
-    }
-  };
-
-  const PrefixSvgIcon = (icon: string) => {
-    if (icon === 'Facebook') {
-      return (
-        <Image
-          source={require('../../../assets/img/facebook-icon.png')}
-          width={30}
-          height={30}
-        />
-      );
-    } else {
-      return (
-        <Image
-          source={require('../../../assets/img/google-icon.png')}
-          width={30}
-          height={30}
-        />
-      );
     }
   };
 
@@ -184,50 +160,7 @@ const SignUp = ({ navigation }: SignUpProps) => {
             fontFamily={appFonts.medium}
             styles={{ textAlign: 'center', marginBottom: 6 }}
           />
-          <CustomButton
-            onPress={() => {}}
-            text="Login with Google"
-            icon={PrefixSvgIcon('Google')}
-            iconFlex="left"
-            type="primary"
-            textStyles={{
-              textAlign: 'center',
-              fontFamily: appFonts.regular,
-              fontSize: 16,
-              color: appColors.black,
-            }}
-            styles={[
-              globalStyles.shadow,
-              {
-                width: 271,
-                alignSelf: 'center',
-                backgroundColor: appColors.white,
-                marginBottom: 18,
-              },
-            ]}
-          />
-          <CustomButton
-            onPress={() => {}}
-            text="Login with Facebook"
-            icon={PrefixSvgIcon('Facebook')}
-            iconFlex="left"
-            type="primary"
-            textStyles={{
-              textAlign: 'center',
-              fontFamily: appFonts.regular,
-              fontSize: 16,
-              color: appColors.black,
-            }}
-            styles={[
-              globalStyles.shadow,
-              {
-                width: 271,
-                alignSelf: 'center',
-                backgroundColor: appColors.white,
-                marginBottom: 18,
-              },
-            ]}
-          />
+          <SocialLogin />
 
           <View
             style={[globalStyles.row, { justifyContent: 'center', gap: 8 }]}
